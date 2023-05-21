@@ -4,10 +4,15 @@ import { CreateCategoryService } from "../../services/category/CreateCategorySer
 
 class CreateCategoryController {
     async handle(request: Request, response: Response) {
-        const { name }: CategoryRequest = request.body;
-        const createCategoryService = new CreateCategoryService()
-        const category = await createCategoryService.execute({name})
-        return response.json(category) 
+        try {
+            const { name }: CategoryRequest = request.body;
+            const createCategoryService = new CreateCategoryService()
+            const category = await createCategoryService.execute({name})
+            return response.json(category)
+        } catch (error: any) {
+            return response.json({ error: error.message });
+        }
+
     }
 }
 
